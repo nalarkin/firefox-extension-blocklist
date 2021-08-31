@@ -3,6 +3,21 @@ const button_type = {
     BLOCK: 'block',
     UNBLOCK: 'unblock'
 };
+const button_style = {
+    block: 'blocklist-block-button',
+    unblock: 'blocklist-unblock-button',
+}
+
+const buttons = {
+    BLOCK: {
+        NAME: 'BLOCK',
+        CLASSNAME: 'blocklist-block-button',
+    },
+    UNBLOCK: {
+        NAME: 'UNBLOCK',
+        CLASSNAME: 'blocklist-unblock-button',
+    },
+}
 
 // let storedData = browser.storage.local.get();
 // storedData.then(data => {
@@ -197,40 +212,41 @@ function domainIsBlocklisted(domain) {
 function addDomainToFilter(domain) {
     /* Callback in onclick to add given domain to the blacklist */
     console.log('adding domain ' + domain);
-    
+
     if (!domainIsBlocklisted(domain) && !RESERVED_KEYWORDS.includes(domain)) {
         //todo: parse domain and set as wildcard *.whatever.com        
         localStorage.setItem(domain, true);
-    }  else {
+    } else {
         console.log('item already blocklisted.');
     }
     console.log('done');
 }
 function toggleDomainInFilter(domain) {
     /* Callback in onclick to add given domain to the blacklist */
-    console.log('toggle domain ' + domain);
-    
+    // console.log('toggle domain ' + domain);
+
     if (!RESERVED_KEYWORDS.includes(domain)) {
         if (!domainIsBlocklisted(domain)) {
             //todo: parse domain and set as wildcard *.whatever.com        
             localStorage.setItem(domain, true);
-        }  else {
+        } else {
             localStorage.removeItem(domain);
             console.log('removed domain from blocklist.');
         }
     }
-    
+
     console.log('done');
 }
 
 function readDomainFilter(domain) {
     /* Callback in onclick to add given domain to the blacklist */
-    for(var i =0; i < localStorage.length; i++){
+    for (var i = 0; i < localStorage.length; i++) {
         console.log(localStorage.getItem(localStorage.key(i)));
     }
 }
 
 function wrapAndCollapseResult(resultNode, domain) {
+    // console.log('wrapAndCollapseResult');
     /* Wrap the blacklisted result with a <details> element so we can autocollapse it */
     let wrapper = document.createElement('details');
     wrapper.id = resultNode.id + "_wrapper";
@@ -241,7 +257,7 @@ function wrapAndCollapseResult(resultNode, domain) {
 
     wrapper.appendChild(filterSummary);
     resultNode.parentNode.insertBefore(wrapper, resultNode);
-    
+
     // let spacer = document.createElement('div');
     // spacer.classList.add('vert-spacer');
     // wrapper.appendChild(spacer);
@@ -260,52 +276,149 @@ function wrapAndCollapseResult(resultNode, domain) {
 
 function getToggledButtonText(currButtonText) {
     switch (currButtonText) {
-        case button_type.BLOCK:
-            return button_type.UNBLOCK;
+        case buttons.BLOCK.NAME:
+            return buttons.UNBLOCK.NAME;
         // Do something for summer beginning
-        case button_type.UNBLOCK:
-            return button_type.BLOCK;
+        case buttons.UNBLOCK.NAME:
+            return buttons.BLOCK.NAME;
+    }
+}
+function getButtonClassName(buttonName) {
+    switch (buttonName) {
+        case buttons.BLOCK.NAME:
+            return buttons.BLOCK.CLASSNAME;
+        // Do something for summer beginning
+        case buttons.UNBLOCK.NAME:
+            return buttons.UNBLOCK.CLASSNAME;
     }
 }
 
-function createButton(buttonName, url) {
-    let but = document.createElement('a')
-    // but.textContent
-    but.href = '#';
-    but.innerHTML = buttonName;
-    but.classList.add('blocklist-button');
-    but.onclick = function () { 
-        console.log('you clicked the button'); 
-        addDomainToFilter(url);
-        // readDomainFilter(url);
-    };
-    but.classList.add('.feedback-prompt');
-    return but;
+// function duplicateTab() {
+//     function onDuplicated(tabInfo) {
+//         console.log(tabInfo.id);
+//     }
+
+//     function onError(error) {
+//         console.log(`Error: ${error}`);
+//     }
+
+//     // Duplicate the first tab in the array
+//     function duplicateFirstTab(tabs) {
+//         console.log(tabs);
+//         if (tabs.length > 0) {
+//             var duplicating = browser.tabs.duplicate(tabs[0].id);
+//             duplicating.then(onDuplicated, onError);
+//         }
+//     }
+//     var querying = browser.tabs.query({});
+//     querying.then(duplicateFirstTab, onError);
+
+// }
+
+// function createButton(buttonName, url) {
+//     let but = document.createElement('a')
+//     // but.textContent
+//     but.href = '#';
+//     but.innerHTML = buttonName;
+//     but.classList.add('blocklist-button');
+//     but.onclick = function () {
+//         console.log('you clicked the button');
+//         addDomainToFilter(url);
+//         // readDomainFilter(url);
+//     };
+//     but.classList.add('.feedback-prompt');
+//     return but;
+// }
+// function createToggleButton(buttonName, url) {
+//     let but = document.createElement('a')
+//     // but.textContent
+//     but.href = '#';
+//     but.innerHTML = buttonName;
+//     but.classList.add(button_style.block);
+//     but.onclick = function () {
+//         console.log('you clicked the button');
+//         toggleDomainInFilter(url);
+//         console.log('but.innerText = ' + but.innerText);
+//         var arr = but.innerText.split(' ');
+//         console.log('arr = ' + arr);
+//         var newValue = getToggledButtonText(arr[0]);
+//         console.log('newValue = ' + newValue)
+//         but.innerHTML = newValue + ' ' + arr[1];
+//         duplicateTab();
+
+//         // readDomainFilter(url);
+//     };
+//     but.classList.add('.feedback-prompt');
+//     return but;
+// }
+function getNewButtonClassList(new_button_type) {
+    arr = buttons.classList;
+    console.log('new_button_type ' + new_button_type);
+    switch (new_button_type) {
+        case button_type.BLOCK:
+            var index = arr.indexOf(button_style.new_button_type);
+            // remove old button class
+            if (index >= 0) {
+                arr.splice(index, 1);
+            }
+            arr.push(button_style.new_button_type)
+            return arr;
+        // Do something for summer beginning
+        case button_type.UNBLOCK:
+            var index = arr.indexOf(button_style.new_button_type);
+            // remove old button class
+            if (index >= 0) {
+                arr.splice(index, 1);
+            }
+            arr.push(button_style.new_button_type)
+            return arr;
+    }
+
 }
-function createToggleButton(buttonName, url) {
-    let but = document.createElement('a')
+
+
+function createToggleButton2(buttonName, url) {
+    console.log('createTogle2');
+    console.log('buttonName= ' + buttonName);
+    console.log('buttons.BLOCK.CLASSNAME = ' + buttons.BLOCK.CLASSNAME);
+    let but = document.createElement('button');
     // but.textContent
-    but.href = '#';
-    but.innerHTML = buttonName;
-    but.classList.add('blocklist-button');
-    but.onclick = function () { 
-        console.log('you clicked the button'); 
+    but.innerText = buttonName;
+    if (domainIsBlocklisted(url)) {
+        but.classList.add(buttons.UNBLOCK.CLASSNAME);
+    } else {
+        but.classList.add(buttons.BLOCK.CLASSNAME);
+    }
+    
+    but.onclick = function () {
+        console.log('you clicked the button');
         toggleDomainInFilter(url);
-        console.log('but.innerText = ' + but.innerText);
+        // console.log('but.innerText = ' + but.innerText);
         var arr = but.innerText.split(' ');
-        console.log('arr = ' + arr);
+        // console.log('arr = ' + arr);
         var newValue = getToggledButtonText(arr[0]);
-        console.log('newValue = ' + newValue)
-        but.innerHTML = newValue + ' ' + arr[1];
+        // console.log('newValue = ' + newValue);
+        newStyle = getButtonClassName(newValue);
+        // console.log('newStyle = ' + newStyle);
+        // but.classList = getNewButtonClassList(newValue);
+        // console.log('classlist before = ' + but.classList);
+        but.classList.remove(buttons.BLOCK.CLASSNAME, buttons.UNBLOCK.CLASSNAME);
+        but.classList.add(newStyle);
+        // console.log('classlist after = ' + but.classList);
+        but.innerText = newValue + ' ' + arr[1];
+
         // readDomainFilter(url);
     };
     but.classList.add('.feedback-prompt');
+    // console.log('finished creating button');
     return but;
 }
 
+function printLoaded() {
+    console.log('loaded page!!')
+}
 
-document.body.style.border = "5px solid red";
-console.log('you should see this on page load');
+// console.log('you should see this on page load');
 
 // document.body.textContent = "";
 
@@ -337,9 +450,9 @@ function createObserver(query) {
     const config = { attributes: true, href: true };
 
     // Callback function to execute when mutations are observed
-    const callback = function(mutationsList, observer) {
+    const callback = function (mutationsList, observer) {
         // Use traditional 'for loops' for IE 11
-        for(const mutation of mutationsList) {
+        for (const mutation of mutationsList) {
             if (mutation.type === 'childList') {
                 console.log('A child node has been added or removed.');
             }
@@ -358,7 +471,7 @@ function createObserver(query) {
     // if any elements match the query
     if (resultDiv) {
         resultsObserver.observe(resultDiv, config);
-    }    
+    }
     return resultsObserver;
 }
 
@@ -368,6 +481,7 @@ function insertButtonBeforeQuery(qSelector, thingToInsert) {
     elem.parentNode.insertBefore(thingToInsert, elem.nextSibling);
 }
 function insertButtonBeforeElement(elem, thingToInsert) {
+    console.log('insertBeforeElement');
     elem.parentNode.insertBefore(thingToInsert, elem);
 }
 
@@ -384,23 +498,23 @@ function addButtonsBeforeLinks() {
             // handles the discrepency in the above format, selects url
             parsedUrl = linkPart.innerText.split(' ')[0];
             console.log(parsedUrl);
-            
-            
+
+
             // remove if it matches this statement
             if (domainIsBlocklisted(parsedUrl)) {
                 // formatting errors caused by div: id="eob_14", very first search result is blacklisted.
-                button = createToggleButton(button_type.UNBLOCK + ' ' + parsedUrl, parsedUrl);
+                button = createToggleButton2(buttons.UNBLOCK.NAME + ' ' + parsedUrl, parsedUrl);
                 wrapper = wrapAndCollapseResult(val, parsedUrl);
                 insertButtonBeforeElement(val, button);
             } else {
-                button = createToggleButton(button_type.BLOCK + ' ' + parsedUrl, parsedUrl);
+                button = createToggleButton2(buttons.BLOCK.NAME + ' ' + parsedUrl, parsedUrl);
                 insertButtonBeforeElement(val, button);
                 arr.push(parsedUrl);
             }
-            
+
             // console.log(val.firstElementChild.previousSibling.data);
         }
-        
+
     }
     console.log(arr);
 }
@@ -414,8 +528,35 @@ function addButtonsBeforeLinks() {
 
 // represents result with span
 // example: msn.com > en-us > Sports
-addButtonsBeforeLinks();
 
+// var css = "body { border: 20px dotted pink; }";
+// browser.browserAction.onClicked.addListener(() => {
+
+//     function onError(error) {
+//       console.log(`Error: ${error}`);
+//     }
+
+//     browser.tabs
+
+
+
+//     var insertingCSS = browser.tabs.insertCSS({code: css});
+//     insertingCSS.then(null, onError);
+// });
+addButtonsBeforeLinks();
+// window.addEventListener('DOMContentLoaded', (event) => {
+//     console.log('DOM fully loaded and parsed');
+// });
+// document.addEventListener('DOMContentLoaded', (event) => {
+//     console.log('DOM fully loaded and parsed');
+// });
+console.log('script injected');
+// window.onload = (event) => {
+//     console.log('page is fully loaded');
+// };
+// window.addEventListener('load', (event) => {
+//     console.log('page is fully loaded');
+// });
 // document.body.appendChild(wrapper);
 
 // gbqfbb

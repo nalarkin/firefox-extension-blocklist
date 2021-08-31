@@ -1,0 +1,93 @@
+body { 
+    border: 20px dotted rgb(255, 46, 255); 
+}
+
+.blocklist-spacer{
+    height: 50px;
+}
+
+ /* .blocklist-block-button {
+    display: block;
+    width: 30%;
+    border: none;
+    background-color: #04AA6D;
+    color: white;
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .blocklist-block-button:hover {
+    background-color: #ddd;
+    color: black;
+  } */
+ /* .blocklist-unblock-button {
+    display: block;
+    width: 30%;
+    border: none;
+    background-color: #ff0040;
+    color: white;
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .blocklist-unblock-button:hover {
+    background-color: #ddd;
+    color: black;
+  } */
+
+.blocklist-block-button {
+    border: 0;
+    line-height: 2.5;
+    padding: 0 20px;
+    font-size: .8rem;
+    text-align: center;
+    color: #fff;
+    /* text-shadow: 1px 1px 1px #000; */
+    border-radius: 20px;
+    background-color: rgba(81, 13, 171, 1);
+    /* background-image: linear-gradient(to top left,
+                                        rgba(0, 0, 0, .2),
+                                        rgba(0, 0, 0, .2) 30%,
+                                        rgba(0, 0, 0, 0)); */
+    box-shadow: inset 2px 2px 3px rgba(255, 255, 255, .6),
+                inset -2px -2px 3px rgba(0, 0, 0, .6);
+}
+
+.blocklist-block-button:hover {
+    background-color: rgba(133, 65, 223, 1);
+}
+
+.blocklist-block-button:active {
+    box-shadow: inset -2px -2px 3px rgba(255, 255, 255, .6),
+                inset 2px 2px 3px rgba(0, 0, 0, .6);
+}
+.blocklist-unblock-button {
+    border: 0;
+    line-height: 2.5;
+    padding: 0 20px;
+    font-size: .8rem;
+    text-align: center;
+    color: #fff;
+    /* text-shadow: 1px 1px 1px #000; */
+    border-radius: 20px;
+    background-color: rgba(171, 28, 87, 1);
+    /* background-image: linear-gradient(to top left,
+                                        rgba(0, 0, 0, .2),
+                                        rgba(0, 0, 0, .2) 30%,
+                                        rgba(0, 0, 0, 0)); */
+    box-shadow: inset 2px 2px 3px rgba(255, 255, 255, .6),
+                inset -2px -2px 3px rgba(0, 0, 0, .6);
+}
+
+.blocklist-unblock-button:hover {
+    background-color: rgba(201, 58, 117, 1);
+}
+
+.blocklist-unblock-button:active {
+    box-shadow: inset -2px -2px 3px rgba(255, 255, 255, .6),
+                inset 2px 2px 3px rgba(0, 0, 0, .6);
+}
