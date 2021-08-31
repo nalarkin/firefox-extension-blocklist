@@ -1,11 +1,23 @@
-body { 
+/* body { 
     border: 20px dotted rgb(255, 46, 255); 
-}
+} */
 
 .blocklist-spacer{
     height: 50px;
 }
 
+.feedback-prompt{
+    background-color: rgb(230, 230, 230);
+}
+
+
+
+.blocklist-summary{
+    color: black;
+    font-size: .8em;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
  /* .blocklist-block-button {
     display: block;
     width: 30%;

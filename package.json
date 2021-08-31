@@ -1,0 +1,27 @@
+{
+  "name": "search-blocklist",
+  "version": "1.0.0",
+  "description": "Firefox extension that allows you to block search results from domains that you specify.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nalarkin/firefox-extension-blocklist.git"
+  },
+  "keywords": [
+    "firefox",
+    "google",
+    "search",
+    "blocklist",
+    "blacklist",
+    "filter"
+  ],
+  "author": "Nathan Larkin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nalarkin/firefox-extension-blocklist/issues"
+  },
+  "homepage": "https://github.com/nalarkin/firefox-extension-blocklist#readme"
+}
