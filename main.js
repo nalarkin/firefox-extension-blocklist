@@ -1,4 +1,8 @@
-RESERVED_KEYWORDS = ['_HIDE', '_EXAMPLE'];
+const RESERVED_KEYWORDS = ['_HIDE', '_EXAMPLE'];
+const button_type = {
+    BLOCK: 'block',
+    UNBLOCK: 'unblock'
+};
 
 // let storedData = browser.storage.local.get();
 // storedData.then(data => {
@@ -175,6 +179,13 @@ RESERVED_KEYWORDS = ['_HIDE', '_EXAMPLE'];
 //     elem.parentNode.insertBefore(filterBtn, elem.nextSibling);
 // }
 
+
+
+/**
+ * https://developer.mozilla.org/en-US/docs/Web/API/Storage is the API to access key/value pairs
+ * @param {string} domain 
+ * @returns 
+ */
 function domainIsBlocklisted(domain) {
     var result = localStorage.getItem(domain);
     if (result === null || result === false) {
@@ -193,6 +204,22 @@ function addDomainToFilter(domain) {
     }  else {
         console.log('item already blocklisted.');
     }
+    console.log('done');
+}
+function toggleDomainInFilter(domain) {
+    /* Callback in onclick to add given domain to the blacklist */
+    console.log('toggle domain ' + domain);
+    
+    if (!RESERVED_KEYWORDS.includes(domain)) {
+        if (!domainIsBlocklisted(domain)) {
+            //todo: parse domain and set as wildcard *.whatever.com        
+            localStorage.setItem(domain, true);
+        }  else {
+            localStorage.removeItem(domain);
+            console.log('removed domain from blocklist.');
+        }
+    }
+    
     console.log('done');
 }
 
@@ -214,7 +241,14 @@ function wrapAndCollapseResult(resultNode, domain) {
 
     wrapper.appendChild(filterSummary);
     resultNode.parentNode.insertBefore(wrapper, resultNode);
+    
+    // let spacer = document.createElement('div');
+    // spacer.classList.add('vert-spacer');
+    // wrapper.appendChild(spacer);
     wrapper.appendChild(resultNode);
+    return wrapper;
+    // wrapper.append(spacer)
+    // wrapper.append(spacer);
 }
 
 // /*
@@ -224,16 +258,46 @@ function wrapAndCollapseResult(resultNode, domain) {
 
 // // Calls filterResults when changes occur in the DOM
 
+function getToggledButtonText(currButtonText) {
+    switch (currButtonText) {
+        case button_type.BLOCK:
+            return button_type.UNBLOCK;
+        // Do something for summer beginning
+        case button_type.UNBLOCK:
+            return button_type.BLOCK;
+    }
+}
 
 function createButton(buttonName, url) {
     let but = document.createElement('a')
     // but.textContent
     but.href = '#';
     but.innerHTML = buttonName;
+    but.classList.add('blocklist-button');
     but.onclick = function () { 
         console.log('you clicked the button'); 
         addDomainToFilter(url);
-        readDomainFilter(url);
+        // readDomainFilter(url);
+    };
+    but.classList.add('.feedback-prompt');
+    return but;
+}
+function createToggleButton(buttonName, url) {
+    let but = document.createElement('a')
+    // but.textContent
+    but.href = '#';
+    but.innerHTML = buttonName;
+    but.classList.add('blocklist-button');
+    but.onclick = function () { 
+        console.log('you clicked the button'); 
+        toggleDomainInFilter(url);
+        console.log('but.innerText = ' + but.innerText);
+        var arr = but.innerText.split(' ');
+        console.log('arr = ' + arr);
+        var newValue = getToggledButtonText(arr[0]);
+        console.log('newValue = ' + newValue)
+        but.innerHTML = newValue + ' ' + arr[1];
+        // readDomainFilter(url);
     };
     but.classList.add('.feedback-prompt');
     return but;
@@ -320,13 +384,17 @@ function addButtonsBeforeLinks() {
             // handles the discrepency in the above format, selects url
             parsedUrl = linkPart.innerText.split(' ')[0];
             console.log(parsedUrl);
-            button = createButton('block ' + parsedUrl, parsedUrl);
-            insertButtonBeforeElement(val, button);
+            
+            
             // remove if it matches this statement
             if (domainIsBlocklisted(parsedUrl)) {
                 // formatting errors caused by div: id="eob_14", very first search result is blacklisted.
-                wrapAndCollapseResult(val, parsedUrl);
+                button = createToggleButton(button_type.UNBLOCK + ' ' + parsedUrl, parsedUrl);
+                wrapper = wrapAndCollapseResult(val, parsedUrl);
+                insertButtonBeforeElement(val, button);
             } else {
+                button = createToggleButton(button_type.BLOCK + ' ' + parsedUrl, parsedUrl);
+                insertButtonBeforeElement(val, button);
                 arr.push(parsedUrl);
             }
             
