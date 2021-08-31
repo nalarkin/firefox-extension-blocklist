@@ -12,3 +12,6 @@ This extension just includes:
 under "google.com/" or any of its subdomains
 
 The content script inserts buttons which allow users to blocklist the url from future search results.
+
+
+lint CLI command: npx eslint main.js

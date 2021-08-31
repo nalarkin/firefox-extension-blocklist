@@ -3,17 +3,25 @@
   "version": "1.0.0",
   "description": "Firefox extension that allows you to block search results from domains that you specify.",
   "main": "main.js",
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.15.0",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.24.2"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src -d lib"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nalarkin/firefox-extension-blocklist.git"
   },
   "keywords": [
-    "firefox",
-    "google",
     "search",
+    "google",
     "blocklist",
     "blacklist",
     "filter"
